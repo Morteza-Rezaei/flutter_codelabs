@@ -1,3 +1,1 @@
-# fitness_app
-
-A new Flutter project.
+# working on auth screens of a fitness app
