@@ -20,7 +20,17 @@ import 'model/product.dart';
 import 'model/products_repository.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final Category category;
+
+  const HomePage({this.category = Category.all, Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: Pass Category variable to AsymmetricView (104)
+    return AsymmetricView(
+      products: ProductsRepository.loadProducts(category),
+    );
+  }
 
   List<Card> _buildGridCards(BuildContext context) {
     List<Product> products = ProductsRepository.loadProducts(Category.all);
@@ -38,7 +48,6 @@ class HomePage extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         elevation: 0.0,
         child: Column(
-          // TODO: Center items on the card (103)
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             AspectRatio(
@@ -55,7 +64,6 @@ class HomePage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  // TODO: Change innermost Column (103)
                   children: <Widget>[
                     Text(
                       product.name,
@@ -77,50 +85,5 @@ class HomePage extends StatelessWidget {
         ),
       );
     }).toList();
-  }
-
-  // TODO: Add a variable for Category (104)
-  @override
-  Widget build(BuildContext context) {
-    // TODO: Return an AsymmetricView (104)
-    // TODO: Pass Category variable to AsymmetricView (104)
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('SHRINE'),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.search,
-              semanticLabel: 'search',
-            ),
-            onPressed: () {
-              print('Search button');
-            },
-          ),
-          IconButton(
-            icon: const Icon(
-              Icons.tune,
-              semanticLabel: 'filter',
-            ),
-            onPressed: () {
-              print('Filter button');
-            },
-          ),
-        ],
-        leading: IconButton(
-          icon: const Icon(
-            Icons.menu,
-            semanticLabel: 'menu',
-          ),
-          onPressed: () {
-            print('Menu button');
-          },
-        ),
-      ),
-      body: AsymmetricView(
-        products: ProductsRepository.loadProducts(Category.all),
-      ),
-      resizeToAvoidBottomInset: false,
-    );
   }
 }
